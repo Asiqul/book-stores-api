@@ -1,8 +1,8 @@
 BOOKS API
 
-1. LOGIN\_\_
-   method : POST
-   endpoint : localhost:3000/login
+1. LOGIN\
+   method : POST\
+   endpoint : localhost:3000/login\
    req.body : JSON Format (email, password)
    res.body : JSON Format (status, message, access token)
    res.cookie : Refresh Token
