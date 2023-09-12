@@ -1,6 +1,6 @@
 BOOKS API
 
-1. LOGIN\_
+1. LOGIN\_\_
    method : POST
    endpoint : localhost:3000/login
    req.body : JSON Format (email, password)
