@@ -25,4 +25,4 @@ BOOKS API
    method : GET\
    endpoint : localhost:3000/access\
    req.cookie : cookie\
-   res.body : JSON Format (status, message, access token)\
+   res.body : JSON Format (status, message, access token)
