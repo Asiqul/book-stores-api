@@ -12,5 +12,5 @@ app.use(cookieParser());
 app.use('/', router);
 app.use(cors());
 app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+    console.log(`Listening on port ${port}`);
 });
