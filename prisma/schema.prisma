@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,11 +8,17 @@ datasource db {
 }
 
 model Users {
-  id            Int     @id @default(autoincrement())
-  name          String
-  email         String
+  id            String  @id @default(nanoid(10))
+  firstname     String
+  lastname      String
+  email         String  @unique
   password      String
-  address       String?
+  phone         String
+  province      String?
+  city          String?
+  district      String?
+  postal_code   Int?
+  full_address  String?
   refresh_token String? @db.LongText
   carts         Cart[]
 }
@@ -24,31 +27,60 @@ model Cart {
   id        Int            @id @default(autoincrement())
   createdAt DateTime       @default(now())
   updatedAt DateTime       @updatedAt
-  userId    Int
+  userId    String
   user      Users          @relation(fields: [userId], references: [id])
   items     HistoryItems[]
 }
 
 model HistoryItems {
-  id        Int   @id @default(autoincrement())
-  quantity  Int
-  productId Int
-  cartId    Int
-  cart      Cart  @relation(fields: [cartId], references: [id])
-  product   Books @relation(fields: [productId], references: [id])
+  id       Int    @id @default(autoincrement())
+  quantity Int
+  bookId   String
+  cartId   Int
+  cart     Cart   @relation(fields: [cartId], references: [id])
+  book     Books  @relation(fields: [bookId], references: [id])
 }
 
 model Books {
-  id          Int            @id @default(autoincrement())
+  id          String         @id @default(nanoid(5))
   title       String
   subtitle    String
-  author      String
+  author      Author[]
   pages       Int
-  publisher   String
+  publisher   Publisher[]
   published   String
-  description String         @db.VarChar(1000)
-  price       Float
+  description String         @db.LongText
+  weight      Float
+  width       Float
+  price       Int
   rating      Float
-  cover       String
-  cartItems   HistoryItems[]
+  category    Category[]
+  cover       BooksCover[]
+  cart        HistoryItems[]
+}
+
+model BooksCover {
+  id     Int    @id @default(autoincrement())
+  cover  String @db.MediumText
+  bookId String
+  book   Books  @relation(fields: [bookId], references: [id])
+}
+
+model Category {
+  id     Int    @id @default(autoincrement())
+  name   String
+  bookId String
+  book   Books  @relation(fields: [bookId], references: [id])
+}
+
+model Author {
+  id    Int     @id @default(autoincrement())
+  name  String  @unique
+  books Books[]
+}
+
+model Publisher {
+  id    Int     @id @default(autoincrement())
+  name  String  @unique
+  books Books[]
 }
