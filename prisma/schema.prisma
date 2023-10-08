@@ -44,16 +44,16 @@ model HistoryItems {
 model Books {
   id          String         @id @default(nanoid(5))
   title       String
-  subtitle    String
-  author      Author[]
   pages       Int
-  publisher   Publisher[]
   published   String
-  description String         @db.LongText
   weight      Float
   width       Float
   price       Int
   rating      Float
+  purchased   Int?
+  description String         @db.LongText
+  author      Author[]
+  publisher   Publisher[]
   category    Category[]
   cover       BooksCover[]
   cart        HistoryItems[]
@@ -67,10 +67,9 @@ model BooksCover {
 }
 
 model Category {
-  id     Int    @id @default(autoincrement())
-  name   String
-  bookId String
-  book   Books  @relation(fields: [bookId], references: [id])
+  id   Int     @id @default(autoincrement())
+  name String
+  book Books[]
 }
 
 model Author {
