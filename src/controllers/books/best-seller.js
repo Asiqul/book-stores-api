@@ -1,15 +1,10 @@
 const prisma = require('../../db/connection');
 
-const recommendations = async () => {
-    const randomNumber = Math.floor(Math.random() * 8);
+const bestSeller = async () => {
     try {
         const books = await prisma.books.findMany({
-            skip: randomNumber,
             take: 10,
             orderBy: [
-                {
-                    rating: 'desc',
-                },
                 {
                     purchased: 'desc',
                 },
@@ -24,6 +19,7 @@ const recommendations = async () => {
                 },
                 price: true,
                 rating: true,
+                purchased: true,
                 cover: {
                     take: 1,
                     select: {
@@ -38,4 +34,4 @@ const recommendations = async () => {
     }
 };
 
-module.exports = recommendations;
+module.exports = bestSeller;
