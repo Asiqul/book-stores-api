@@ -51,6 +51,7 @@ model Books {
   price       Int
   rating      Float
   purchased   Int?
+  views       Int?
   description String         @db.LongText
   author      Author[]
   publisher   Publisher[]
@@ -67,9 +68,9 @@ model BooksCover {
 }
 
 model Category {
-  id   Int     @id @default(autoincrement())
-  name String
-  book Books[]
+  id    Int     @id @default(autoincrement())
+  name  String
+  books Books[]
 }
 
 model Author {

@@ -12,7 +12,6 @@ const bookById = async (req, res) => {
                 publisher: true,
             },
         });
-        res.status(200).json({ message: 'Book found', book });
     } catch (error) {
         return error;
     }
