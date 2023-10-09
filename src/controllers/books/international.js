@@ -1,14 +1,14 @@
 const prisma = require('../../db/connection');
 
-const international = async () => {
+const international = async (limit) => {
     try {
         const internationalBooks = await prisma.category.findMany({
-            take: 10,
             where: {
                 name: 'international Books',
             },
             include: {
                 books: {
+                    take: limit ? limit : 10,
                     select: {
                         id: true,
                         title: true,
@@ -29,7 +29,10 @@ const international = async () => {
                 },
             },
         });
-        return internationalBooks;
+        if (internationalBooks.length !== 0) {
+            return internationalBooks;
+        }
+        return null;
     } catch (error) {
         throw error;
     }
