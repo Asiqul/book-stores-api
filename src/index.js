@@ -14,6 +14,9 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
+app.use('/', (req, res) => {
+    res.status(200).send('Welcome to Books API!');
+});
 app.use('/auth/user', userRouter);
 app.use('/api/books', bookRouters);
 
