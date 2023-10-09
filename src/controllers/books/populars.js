@@ -1,9 +1,11 @@
 const prisma = require('../../db/connection');
 
-const populars = async () => {
+const popularBooks = async (limit) => {
     try {
+        limit ? (randomNumber = 0) : (randomNumber = Math.floor(Math.random() * 10));
         const books = await prisma.books.findMany({
-            take: 10,
+            skip: randomNumber,
+            take: limit ? limit : 10,
             orderBy: [
                 {
                     views: 'desc',
@@ -31,10 +33,13 @@ const populars = async () => {
                 },
             },
         });
-        return books;
+        if (books.length !== 0) {
+            return books;
+        }
+        return null;
     } catch (error) {
         throw error;
     }
 };
 
-module.exports = populars;
+module.exports = popularBooks;

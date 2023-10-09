@@ -1,14 +1,19 @@
 const prisma = require('../../db/connection');
-
-const bestSeller = async (limit) => {
+const searchBooks = async (query, limit) => {
     try {
+        limit ? (randomNumber = 0) : (randomNumber = Math.floor(Math.random() * 10));
         const books = await prisma.books.findMany({
-            take: limit ? limit : 10,
-            orderBy: [
-                {
-                    purchased: 'desc',
-                },
-            ],
+            skip: randomNumber,
+            take: limit ? limit : 15,
+            where: {
+                OR: [
+                    {
+                        title: {
+                            contains: query,
+                        },
+                    },
+                ],
+            },
             select: {
                 id: true,
                 title: true,
@@ -19,7 +24,6 @@ const bestSeller = async (limit) => {
                 },
                 price: true,
                 rating: true,
-                purchased: true,
                 cover: {
                     take: 1,
                     select: {
@@ -37,4 +41,4 @@ const bestSeller = async (limit) => {
     }
 };
 
-module.exports = bestSeller;
+module.exports = searchBooks;

@@ -1,44 +1,91 @@
 const recommendations = require('../../controllers/books/recomendations');
-const populars = require('../../controllers/books/populars');
+const popularBooks = require('../../controllers/books/populars');
 const bestSeller = require('../../controllers/books/best-seller');
 const international = require('../../controllers/books/international');
+const searchBooks = require('../../controllers/books/search-books');
+const searchAuthor = require('../../controllers/books/search-author');
 
-const searchBooks = async (req, res) => {
-    const { search } = req.query;
+const search = async (req, res) => {
+    let { based_on, q, limit } = req.query;
+    limit = parseInt(limit);
     try {
-        if (!search) {
+        if (!based_on && !q && !limit) {
             return res.status(400).json({
                 status: 'Bad Request',
                 message: 'Query parameter is missing',
             });
-        } else if (search === 'recommendations') {
-            const recommend = await recommendations();
-            return res.status(200).json({
-                status: 'OK',
-                message: 'Books found',
-                recommend,
-            });
-        } else if (search === 'populars') {
-            const popular = await populars();
-            return res.status(200).json({
-                status: 'OK',
-                message: 'Books found',
-                popular,
-            });
-        } else if (search === 'best-seller') {
-            const bigSales = await bestSeller();
-            return res.status(200).json({
-                status: 'OK',
-                message: 'Books found',
-                bigSales,
-            });
-        } else if (search === 'international') {
-            const intBooks = await international();
-            return res.status(200).json({
-                status: 'OK',
-                message: 'Books found',
-                intBooks,
-            });
+        } else if (based_on === 'recommendations') {
+            const recommend = await recommendations(limit);
+            recommend
+                ? res.status(200).json({
+                      status: 'OK',
+                      message: 'Books found',
+                      recommend,
+                  })
+                : res.status(404).json({
+                      status: 'Not Found',
+                      message: 'Book not found',
+                  });
+        } else if (based_on === 'populars') {
+            const populars = await popularBooks(limit);
+            populars
+                ? res.status(200).json({
+                      status: 'OK',
+                      message: 'Books found',
+                      populars,
+                  })
+                : res.status(404).json({
+                      status: 'Not Found',
+                      message: 'Book not found',
+                  });
+        } else if (based_on === 'best-seller') {
+            const bigSales = await bestSeller(limit);
+            bigSales
+                ? res.status(200).json({
+                      status: 'OK',
+                      message: 'Books found',
+                      bigSales,
+                  })
+                : res.status(404).json({
+                      status: 'Not Found',
+                      message: 'Book not found',
+                  });
+        } else if (based_on === 'international') {
+            const intBooks = await international(limit);
+            intBooks
+                ? res.status(200).json({
+                      status: 'OK',
+                      message: 'Books found',
+                      intBooks,
+                  })
+                : res.status(404).json({
+                      status: 'Not Found',
+                      message: 'Book not found',
+                  });
+        } else if (based_on === 'author') {
+            const books = await searchAuthor(q, limit);
+            books
+                ? res.status(200).json({
+                      status: 'OK',
+                      message: 'Books found',
+                      books,
+                  })
+                : res.status(404).json({
+                      status: 'Not Found',
+                      message: 'Book not found',
+                  });
+        } else if (q || limit) {
+            const search = await searchBooks(q, limit);
+            search
+                ? res.status(200).json({
+                      status: 'OK',
+                      message: 'Books found',
+                      search,
+                  })
+                : res.status(404).json({
+                      status: 'Not Found',
+                      message: 'Book not found',
+                  });
         } else {
             return res.status(404).json({
                 status: 'Not Found',
@@ -53,4 +100,4 @@ const searchBooks = async (req, res) => {
     }
 };
 
-module.exports = searchBooks;
+module.exports = search;
