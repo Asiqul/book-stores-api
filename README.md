@@ -27,24 +27,38 @@ BOOKS API
    req.cookie : cookie\
    res.body : JSON Format (status, message, access token)
 
-5. GET BOOKS HOMEPAGE\
+5. GET INTERNATIONAL BOOKS\
    method : GET\
-   endpoint : /api/books/?search=(value)\
-   value : recommendations, populars, best-seller, international\
-   res.body : JSON Format (status, message, books)
+   endpoint : /api/books/internatinal?\
+   optional query : page, limit\
+   res.body : JSON Format (status, message, paginations, books)
 
-6. GET MORE BOOKS (recommendations, populars, best-seller, international)\
+6. GET RECOMMENDATIONS BOOKS\
    method : GET\
-   endpoint : /api/books/?search=(value)&&limit=(optional number value)\
-   value : recommendations, populars, best-seller, international\
-   res.body : JSON Format (status, message, books)
+   endpoint : /api/books/recommendations?\
+   optional query : page, limit\
+   res.body : JSON Format (status, message, paginations, books)
 
-7. SEARCH BOOKS by TITLE\
+7. GET POPULARS BOOKS\
    method : GET\
-   endpoint : /api/books/?q=(search value)&&limit=(optional number value)\
-   res.body : JSON Format (status, message, books)
+   endpoint : /api/books/populars?\
+   optional query : page, limit\
+   res.body : JSON Format (status, message, paginations, books)
 
-8. SEARCH BOOKS by AUTHOR\
+8. GET BEST SALE BOOKS\
    method : GET\
-   endpoint : /api/books/?based_on=author&&q=(search value)&&limit=(optional value number)\
-   res.body : JSON Format (status, message, books)
+   endpoint : /api/books/best-seller?\
+   optional query : page, limit\
+   res.body : JSON Format (status, message, paginations, books)
+
+9. SEARCH BOOKS by TITLE\
+   method : GET\
+   endpoint : /api/books/search?\
+   query : q(search query), page(page query), limit(limitations per page)\
+   res.body : JSON Format (status, message, paginations, books)
+
+10. SEARCH BOOKS by AUTHOR\
+    method : GET\
+    endpoint : /api/books/search?\
+    query : based_on(set to author), q(search query), page(page query), limit(limitations per page)\
+    res.body : JSON Format (status, message, paginations, books)
