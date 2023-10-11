@@ -29,7 +29,7 @@ BOOKS API
 
 5. GET INTERNATIONAL BOOKS\
    method : GET\
-   endpoint : /api/books/internatinal?\
+   endpoint : /api/books/international?\
    optional query : page, limit\
    res.body : JSON Format (status, message, paginations, books)
 
