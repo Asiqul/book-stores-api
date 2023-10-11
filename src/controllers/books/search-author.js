@@ -1,57 +1,55 @@
 const prisma = require('../../db/connection');
 
-const searchAuthor = async (query, limit) => {
+const searchAuthor = async (query, limit, page) => {
     try {
-        limit ? (randomNumber = 0) : (randomNumber = Math.floor(Math.random() * 10));
-        const authors = await prisma.author.findMany({
-            skip: randomNumber,
+        const offset = (page - 1) * limit;
+        const total_count = await prisma.books.count({
             where: {
-                name: {
-                    contains: query,
-                },
-            },
-            include: {
-                books: {
-                    take: limit ? limit : 15,
-                    select: {
-                        id: true,
-                        title: true,
-                        author: {
-                            select: {
-                                name: true,
-                            },
-                        },
-                        price: true,
-                        rating: true,
-                        cover: {
-                            take: 1,
-                            select: {
-                                cover: true,
-                            },
+                author: {
+                    some: {
+                        name: {
+                            contains: query,
                         },
                     },
                 },
             },
         });
 
-        if (authors.length !== 0) {
-            const books = authors.map((author) => {
-                return author.books.map((book) => {
-                    return {
-                        id: book.id,
-                        title: book.title,
-                        author: {
-                            name: author.name,
+        const books = await prisma.books.findMany({
+            skip: offset,
+            take: limit,
+            where: {
+                author: {
+                    some: {
+                        name: {
+                            contains: query,
                         },
-                        price: book.price,
-                        rating: book.rating,
-                        cover: book.cover,
-                    };
-                });
-            });
-            return books;
+                    },
+                },
+            },
+            select: {
+                id: true,
+                title: true,
+                author: {
+                    select: {
+                        name: true,
+                    },
+                },
+                price: true,
+                rating: true,
+                cover: {
+                    take: 1,
+                    select: {
+                        cover: true,
+                    },
+                },
+            },
+        });
+        if (total_count === 0) {
+            return books === null;
         }
-        return null;
+        const page_count = Math.ceil(total_count / limit);
+        return { books, total_count, page_count };
     } catch (error) {
         throw error;
     }

@@ -1,18 +1,22 @@
 const prisma = require('../../db/connection');
-const searchBooks = async (query, limit) => {
+const searchBooks = async (q, limit, page) => {
     try {
-        limit ? (randomNumber = 0) : (randomNumber = Math.floor(Math.random() * 10));
-        const books = await prisma.books.findMany({
-            skip: randomNumber,
-            take: limit ? limit : 15,
+        const offset = (page - 1) * limit;
+        const total_count = await prisma.books.count({
             where: {
-                OR: [
-                    {
-                        title: {
-                            contains: query,
-                        },
-                    },
-                ],
+                title: {
+                    contains: q,
+                },
+            },
+        });
+
+        const search = await prisma.books.findMany({
+            skip: offset,
+            take: limit,
+            where: {
+                title: {
+                    contains: q,
+                },
             },
             select: {
                 id: true,
@@ -32,10 +36,11 @@ const searchBooks = async (query, limit) => {
                 },
             },
         });
-        if (books.length !== 0) {
-            return books;
+        if (total_count === 0) {
+            return search === null;
         }
-        return null;
+        const page_count = Math.ceil(total_count / limit);
+        return { search, total_count, page_count };
     } catch (error) {
         throw error;
     }
