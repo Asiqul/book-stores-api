@@ -1,7 +1,7 @@
 BOOKS API
 
 1. LOGIN\
-   method &nbsp;: POST\
+   method (4 x &nbsp;): POST\
    endpoint &nbsp;p: /auth/user/login\
    req.body &nbsp;: JSON Format (email, password)\
    res.body &nbsp;: JSON Format (status, message, access token)\
