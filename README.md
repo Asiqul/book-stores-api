@@ -5,7 +5,7 @@ BOOKS API
    endpoint &emsp;&emsp;&emsp;: /auth/user/login\
    req.body &emsp;&emsp;&emsp;: JSON Format (email, password)\
    res.body &emsp;&emsp;&emsp;: JSON Format (status, message, access token)\
-   res.cookie &emsp;&emsp;&emsp;: Refresh Token
+   res.cookie \t: Refresh Token
 
 2. REGISTER\
    method : POST\
