@@ -1,7 +1,7 @@
 BOOKS API
 
 1. LOGIN\
-   method            : POST\
+   method &emsp;: POST\
    endpoint          : /auth/user/login\
    req.body          : JSON Format (email, password)\
    res.body          : JSON Format (status, message, access token)\
