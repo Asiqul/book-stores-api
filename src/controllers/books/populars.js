@@ -14,6 +14,7 @@ const popularBooks = async (page, limit) => {
                 },
             ],
         });
+
         const books = await prisma.books.findMany({
             skip: randomNumber || offset,
             take: limit ? limit : 10,
