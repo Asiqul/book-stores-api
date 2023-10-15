@@ -1,11 +1,11 @@
 BOOKS API
 
 1. LOGIN\
-   method 				: POST\
-   endpoint 			: /auth/user/login\
-   req.body 			: JSON Format (email, password)\
-   res.body 			: JSON Format (status, message, access token)\
-   res.cookie			: Refresh Token
+   method : POST\
+   endpoint : /auth/user/login\
+   req.body : JSON Format (email, password)\
+   res.body : JSON Format (status, message, access token)\
+   res.cookie : Refresh Token
 
 2. REGISTER\
    method : POST\
