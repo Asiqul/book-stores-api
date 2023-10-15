@@ -1,18 +1,18 @@
 const express = require('express');
-const userRegister = require('../../services/auth/register');
-const userLogin = require('../../services/auth/login');
-const logout = require('../../controllers/auth/logout');
-const verifyEmail = require('../../middlewares/verify-email');
-const verifyPassword = require('../../middlewares/verify-password');
-const verifyToken = require('../../middlewares/verify-token');
-const getAccess = require('../../controllers/auth/get-access');
-const userRouter = express.Router();
+const verifyAccess = require('../../middlewares/verify-access');
+const updateAddress = require('../../controllers/users/update/address');
+const profile = require('../../controllers/users/profile');
+const checkout = require('../../controllers/users/checkout');
+const history = require('../../controllers/users/history');
+const address = require('../../controllers/users/address');
+const usersRouter = express.Router();
 
-userRouter.get('/access', verifyToken, getAccess);
+usersRouter.get('/profile', verifyAccess, profile);
+usersRouter.get('/history', verifyAccess, history);
+usersRouter.get('/address', verifyAccess, address);
 
-userRouter.post('/register', verifyEmail, verifyPassword, userRegister);
-userRouter.post('/login', userLogin);
+usersRouter.post('/checkout', verifyAccess, checkout);
 
-userRouter.delete('/logout', verifyToken, logout);
+usersRouter.put('/address', verifyAccess, updateAddress);
 
-module.exports = userRouter;
+module.exports = usersRouter;

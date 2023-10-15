@@ -8,19 +8,27 @@ datasource db {
 }
 
 model Users {
-  id            String  @id @default(nanoid(10))
+  id            String    @id @default(nanoid(10))
   firstname     String
   lastname      String
-  email         String  @unique
+  email         String    @unique
   password      String
   phone         String
-  province      String?
-  city          String?
-  district      String?
-  postal_code   Int?
-  full_address  String?
-  refresh_token String? @db.LongText
+  refresh_token String?   @db.LongText
+  address       Address[]
   carts         Cart[]
+}
+
+model Address {
+  id           Int    @id @default(autoincrement())
+  recipient    String
+  province     String
+  city         String
+  district     String
+  postal_code  Int
+  full_address String @db.MediumText
+  userId       String
+  user         Users  @relation(fields: [userId], references: [id])
 }
 
 model Cart {

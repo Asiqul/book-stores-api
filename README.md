@@ -62,3 +62,8 @@ BOOKS API
     endpoint : /api/books/search?\
     query : based_on(set to author), q(search query), page(page query), limit(limitations per page)\
     res.body : JSON Format (status, message, paginations, books)
+
+11. GET DETAIL BOOK\
+    method : GET\
+    endpoint : /api/books/:id\
+    res.body : JSON Format (status, message, book detail)

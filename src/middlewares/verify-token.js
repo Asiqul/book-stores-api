@@ -30,7 +30,10 @@ const verifyToken = async (req, res, next) => {
         });
         next();
     } catch (error) {
-        return error;
+        return res.status(500).json({
+            status: 'Internal Server Error',
+            message: error.message,
+        });
     }
 };
 
