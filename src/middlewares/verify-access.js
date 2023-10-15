@@ -17,14 +17,17 @@ const verifyAccess = (req, res, next) => {
             if (error) {
                 return res.status(401).json({
                     status: 'Unauthorized',
-                    message: 'Invalid token.',
+                    message: 'Invalid access token.',
                 });
             }
-            req.email = decoded.email;
+            req.user = decoded;
             next();
         });
     } catch (error) {
-        return error;
+        return res.status(500).json({
+            status: 'Internal Server Error',
+            message: error.message,
+        });
     }
 };
 
