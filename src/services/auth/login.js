@@ -10,7 +10,7 @@ const userLogin = async (req, res) => {
         },
     });
     if (!user) {
-        return res.json({
+        return res.status(400).json({
             status: 'Bad Request',
             message: 'Email tidak terdaftar.',
         });
@@ -25,7 +25,9 @@ const userLogin = async (req, res) => {
     const { accessToken, refreshToken } = await login(user);
     res.cookie('refreshToken', refreshToken, {
         httpOnly: true,
-        maxAge: 60 * 20,
+        secure: true,
+        sameSite: 'strict',
+        maxAge: 1000 * 60 * 60 * 24, // 1 day
     });
     res.status(200).json({
         status: 'OK',

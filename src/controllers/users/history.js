@@ -25,6 +25,11 @@ const history = async (req, res) => {
                         select: {
                             id: true,
                             title: true,
+                            author: {
+                                select: {
+                                    name: true,
+                                },
+                            },
                         },
                     },
                 },

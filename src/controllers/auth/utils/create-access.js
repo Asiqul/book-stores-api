@@ -12,7 +12,7 @@ const createAccess = (user) => {
         },
         accessKey,
         {
-            expiresIn: '2m',
+            expiresIn: '10s',
         }
     );
 

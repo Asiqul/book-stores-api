@@ -13,7 +13,12 @@ const port = process.env.APP_PORT;
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(
+    cors({
+        origin: 'http://localhost:5173',
+        credentials: true,
+    })
+);
 
 app.get('/', (req, res) => {
     res.status(200).send('<h1>Welcome to Books API!</h1>');

@@ -7,7 +7,6 @@ const verifyPassword = require('../../middlewares/verify-password');
 const verifyToken = require('../../middlewares/verify-token');
 const getAccess = require('../../controllers/auth/get-access');
 const verifyAccess = require('../../middlewares/verify-access');
-const updateAddress = require('../../controllers/users/update/address');
 const authRouter = express.Router();
 
 authRouter.get('/access', verifyToken, getAccess);
