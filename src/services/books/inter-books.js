@@ -5,7 +5,6 @@ const intBooks = async (req, res) => {
     try {
         if (!page && !limit) {
             const { books } = await international();
-            console.log(books);
             books
                 ? res.status(200).json({
                       status: 'OK',

@@ -6,11 +6,13 @@ const recommendBooks = require('../../services/books/recommendations');
 const populars = require('../../services/books/populars');
 const bestSale = require('../../services/books/best-sale');
 const intBooks = require('../../services/books/inter-books');
+const category = require('../../controllers/books/category');
 
 bookRouters.get('/recommendations?', recommendBooks);
 bookRouters.get('/populars?', populars);
 bookRouters.get('/best-seller?', bestSale);
 bookRouters.get('/international?', intBooks);
+bookRouters.get('/category', category);
 bookRouters.get('/search?', search);
 bookRouters.get('/:bookId', bookById);
 
